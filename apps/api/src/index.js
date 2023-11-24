@@ -1,57 +1,70 @@
-import { join } from "path";
-import { config } from "dotenv";
-import express, { json } from "express";
-import cors from "cors";
-import router from "./router";
+import express, { json, Express } from 'express';
+import cors from 'cors';
+import { join } from 'path';
+import { NODE_ENV, PORT } from './config';
+import router from './router';
 
-config({ path: join(__dirname, "../.env") });
+/**
+ * Serve "web" project build result (for production only)
+ * @param {Express} app
+ */
+const serveWebProjectBuildResult = (app) => {
+  if (NODE_ENV !== 'development') {
+    const clientPath = '../../web/dist';
+    app.use(express.static(join(__dirname, clientPath)));
 
-const PORT = process.env.PORT || 8000;
-const app = express();
-
-app.use(cors());
-app.use(json());
-
-app.use("/api", router);
-
-// ===========================
-
-// not found
-app.use((req, res, next) => {
-  if (req.path.includes("/api/")) {
-    res.status(404).send("Not found !");
-  } else {
-    next();
+    // Serve the HTML page
+    app.get('*', (req, res) => {
+      res.sendFile(join(__dirname, clientPath, 'index.html'));
+    });
   }
-});
+};
 
-// error
-app.use((err, req, res, next) => {
-  if (req.path.includes("/api/")) {
-    console.error("Error : ", err.stack);
-    res.status(500).send("Error !");
-  } else {
-    next();
-  }
-});
+/**
+ * Global error handler
+ * @param {Express} app
+ */
+const globalAPIErrorHandler = (app) => {
+  // not found
+  app.use((req, res, next) => {
+    if (req.path.includes('/api/')) {
+      res.status(404).send('Not found !');
+    } else {
+      next();
+    }
+  });
 
-//#endregion
+  // error
+  app.use((err, req, res, next) => {
+    if (req.path.includes('/api/')) {
+      console.error('Error : ', err.stack);
+      res.status(500).send('Error !');
+    } else {
+      next();
+    }
+  });
+};
 
-//#region CLIENT
-const clientPath = "../../web/dist";
-app.use(express.static(join(__dirname, clientPath)));
+/**
+ * Main function of API project
+ */
+const main = () => {
+  const app = express();
+  app.use(cors());
+  app.use(json());
 
-// Serve the HTML page
-app.get("*", (req, res) => {
-  res.sendFile(join(__dirname, clientPath, "index.html"));
-});
+  app.use('/api', router);
 
-//#endregion
+  globalAPIErrorHandler(app);
+  serveWebProjectBuildResult(app);
 
-app.listen(PORT, (err) => {
-  if (err) {
-    console.log(`ERROR: ${err}`);
-  } else {
-    console.log(`  ➜  [API] Local:   http://localhost:${PORT}/`);
-  }
-});
+  app.listen(PORT, (err) => {
+    if (err) {
+      console.log(`ERROR: ${err}`);
+    } else {
+      console.log(`  ➜  [API] Local:   http://localhost:${PORT}/`);
+    }
+  });
+};
+
+main();

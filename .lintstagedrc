@@ -1,0 +1,6 @@
+{
+  "*.js": [
+    "lint",
+    "prettier --write"
+  ]
+}

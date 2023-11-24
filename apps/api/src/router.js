@@ -1,36 +1,12 @@
-import { Router } from "express";
+import { Router } from 'express';
+import { sampleRouter } from './routers/sample.router';
 
 const router = Router();
 
-router.get("/", (req, res) => {
-  res.send(`Hello, this is my API`);
+router.get('/', (req, res) => {
+  res.send(`Hello, Purwadhika Student !`);
 });
 
-router.get("/greetings", (req, res, next) => {
-  res.status(200).json({
-    message: "Hello, Student !",
-  });
-});
-
-// =========
-
-const sampleRouter = Router();
-
-sampleRouter.use((req, res, next) => {
-  console.log("Sample Router Middleware");
-  next();
-});
-
-sampleRouter.get("/", (req, res) => {
-  res.send("Sample Data");
-});
-
-sampleRouter.post("/", (req, res) => {
-  res.send("Create Sample Data");
-});
-
-// =========
-
-router.use("/sample", sampleRouter);
+router.use('/sample', sampleRouter);
 
 export default router;
