@@ -1,5 +1,7 @@
+import Sample from '../models/sample.model';
+
 export const getSampleData = async () => {
-  return [{ name: 'Sample data' }];
+  return await Sample.findAll();
 };
 
 export const getSampleDataById = async () => {

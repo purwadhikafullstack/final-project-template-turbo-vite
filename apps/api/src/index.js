@@ -3,6 +3,7 @@ import cors from 'cors';
 import { join } from 'path';
 import { NODE_ENV, PORT } from './config';
 import router from './router';
+import './models';
 
 /**
  * Serve "web" project build result (for production only)
