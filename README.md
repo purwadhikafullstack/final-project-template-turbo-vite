@@ -20,7 +20,13 @@ Runs the app in the production mode.
 
 ### `npm run <task> --workspace=<app-name>`
 
-Run command on specific app (install package, run test, etc)
+Run command on specific app (install package, run test, etc).
+
+### `npm run <task> --workspace=<app-name> -- --<option>`
+
+Run command on specific app with options.
+
+Example : `npm run seqeulize --workspace=api -- --db:migrate`
 
 # Rules
 
