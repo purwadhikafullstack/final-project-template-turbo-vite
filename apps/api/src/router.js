@@ -9,4 +9,6 @@ router.get('/', (req, res) => {
 
 router.use('/sample', sampleRouter);
 
+// add another router here ...
+
 export default router;

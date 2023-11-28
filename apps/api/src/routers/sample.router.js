@@ -6,12 +6,6 @@ import {
 
 const sampleRouter = Router();
 
-// Middleware
-sampleRouter.use((req, res, next) => {
-  console.log('Sample Router Middleware');
-  next();
-});
-
 // GET
 sampleRouter.get('/', async (req, res) => {
   const result = await getSampleData();

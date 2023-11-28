@@ -3,7 +3,7 @@ import cors from 'cors';
 import { join } from 'path';
 import { NODE_ENV, PORT } from './config';
 import router from './router';
-import './models';
+import { DB } from './db';
 
 /**
  * Serve "web" project build result (for production only)
@@ -50,10 +50,11 @@ const globalAPIErrorHandler = (app) => {
  * Main function of API project
  */
 const main = () => {
+  DB.initialize();
+
   const app = express();
   app.use(cors());
   app.use(json());
-
   app.use('/api', router);
 
   globalAPIErrorHandler(app);
