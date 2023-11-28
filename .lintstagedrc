@@ -1,7 +1,6 @@
 {
-  "*.js,*.jsx": [
+  "*.{ts,js,tsx,jsx}": [
     "eslint . --ext js --report-unused-disable-directives --max-warnings 0",
-    "prettier --write",
-    "npm run test"
+    "prettier --write"
   ]
 }
