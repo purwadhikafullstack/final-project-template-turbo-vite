@@ -1,7 +1,7 @@
 import request from 'supertest';
 // const { MockModel, MockDataTypes } = require('sequelize-mock');
 import { Model } from 'sequelize-mock';
-import { Sample } from '../models/sample.model';
+import Sample from '../models/sample.model';
 import { initializeApp, teardownApp } from '../test.utils';
 
 describe('sample.router.js', () => {
