@@ -2,6 +2,7 @@ import { readdirSync } from 'fs';
 import { basename as _basename, join } from 'path';
 import Sequelize from 'sequelize';
 import config from './db.config';
+import { NODE_ENV } from './config';
 
 export class DB {
   static sequelize;
@@ -12,10 +13,10 @@ export class DB {
 
     if (!this.sequelize) {
       this.sequelize = new Sequelize(
-        config.database,
-        config.username,
-        config.password,
-        config,
+        config[NODE_ENV].database,
+        config[NODE_ENV].username,
+        config[NODE_ENV].password,
+        config[NODE_ENV],
       );
     }
 
