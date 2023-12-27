@@ -19,7 +19,7 @@
     "tsconfig": "*",
     "turbo": "latest"
   },
-  "name": "final-project-template-turbo-vite",
+  "name": "finpro-vite-express-sequelize",
   "packageManager": "npm@8.15.0",
   "workspaces": [
     "apps/*",
